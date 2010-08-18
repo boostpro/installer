@@ -1,0 +1,17 @@
+BOOST INSTALLER END USER LICENSE AGREEMENT
+
+PLEASE CAREFULLY READ THE FOLLOWING TERMS AND CONDITIONS BEFORE INSTALLING, ACCESSING OR OTHERWISE USING THE BOOST INSTALLER SOFTWARE. BY INSTALLING, ACCESSING OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT.
+
+1. License Grant.  Boostpro Computing grants you a non-exclusive license to install and execute the Boost Installer Software and any updates or patches provided to you by Boost (the “Software”) and redistribute the Software in unmodified form.
+
+2. Restrictions on Use.  You acquire no title or ownership right in the Software, and except as expressly set forth herein, you may not sell, re-sell, rent, lease, lend, sublicense, distribute, or otherwise transfer the Software or any of your rights granted under this Agreement. Except as stated in Section 1 above, this Agreement does not grant to you any right (whether by license, ownership or otherwise) in or to patents, copyrights, trade secrets, trade names, trademarks or any other intellectual property right with respect to the Software and Boost Consulting, Inc. retains all right, title and interest in and to the Software and all copies thereof.  You shall not modify, reverse engineer, disassemble or decompile the Software.
+
+3. Term.  This Agreement is effective upon the installation, access or other use of the Software by you and shall remain in force until terminated.  This Agreement shall terminate automatically upon your breach of this Agreement.  You may terminate this Agreement voluntarily at any time, provided that such termination is accompanied by the deletion and/or destruction of the Software and all copies each thereof.
+ 
+4. No Warranty. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+5. Liability.  TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL BOOST CONSULTING BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, LOSS OF USE, LOSS OF PROFIT, INTERRUPTION OF BUSINESS, OR ANY INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ANY KIND) REGARDLESS OF THE FORM OF ACTION AND WHETHER IN CONTRACT, TORT, STRICT PRODUCT LIABILITY OR OTHERWISE, EVEN IF BOOST CONSULTING HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+6. Entire Agreement.  This Agreement contains the entire agreement between the parties.  This Agreement supersedes all prior oral and written agreements between the parties as to the subject matter hereof.  This Agreement may not be modified or amended except by writing signed by an authorized representative of Boostpro Computing and by you.
+
+Copyright 2007 Boostpro Computing.
