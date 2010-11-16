@@ -485,9 +485,7 @@ SectionEnd
 
 ; The stuff to install
 Section "Boost header files (required)"
-
     AddSize 4267
-
     StrCpy $0 "boost_${NORMALIZED_VERSION}_headers.zip"
 
     ; Skip if already downloaded
@@ -495,7 +493,6 @@ Section "Boost header files (required)"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-#    StrCpy $1 "http://81.172.172.90/~danielw/"
     inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
     Pop $1
     StrCmp $1 "OK" success
@@ -508,20 +505,9 @@ Section "Boost header files (required)"
   failed_again:
   cancel:
     Return
-;    Abort
   success:
     Push $0
     Push ""
-
-;  StrCmp $select_new_mirror 1 0 dont_skip
-;  Return
-; dont_skip:
-
-;  SectionIn RO ; this is a Read-only section -- the user can't edit any of this
-
-  ; Set output path to the installation directory.
-;  SetOutPath $INSTDIR\boost
-
 SectionEnd ; end the section
 
 ; Optional section (can be disabled by the user)
@@ -560,11 +546,6 @@ Function DownloadFile
     Pop $1
     StrCmp $1 "OK" success
     StrCmp $1 "Cancelled" cancel
-;    MessageBox MB_OK "Download failed: $1"
-;    StrCmp $select_new_mirror 1 failed_again
-;    StrCpy $select_new_mirror 1
-;    StrCpy $R9 -4
-;    call RelGotoPage
   failed_again:
     ; failed twice, try boost-consulting.com
     ${If} $use_boost_consulting == 0
@@ -577,7 +558,6 @@ Function DownloadFile
   cancel:
     StrCpy $use_boost_consulting 0
     Return
-;    Abort
   success:
     StrCpy $use_boost_consulting 0
     Push $0
@@ -590,9 +570,7 @@ FunctionEnd
 ; dont_skip:
 
 Section "Source and Documentation"
-
     AddSize 14958
-
     StrCpy $0 "boost_${NORMALIZED_VERSION}_doc_src.zip"
 
     ; Skip if already downloaded
@@ -600,7 +578,6 @@ Section "Source and Documentation"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-#        StrCpy $1 "http://81.172.172.90/~danielw/"
     inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
     Pop $1
     StrCmp $1 "OK" success
@@ -613,7 +590,6 @@ Section "Source and Documentation"
   failed_again:
   cancel:
     Return
-;    Abort
   success:
     Push $0
     Push ""
@@ -626,9 +602,7 @@ SectionEnd
 ; dont_skip:
 
 Section "Tools (source and binary)"
-
     AddSize 1122
-
     StrCpy $0 "boost_${NORMALIZED_VERSION}_tools.zip"
 
     ; Skip if already downloaded
@@ -636,8 +610,6 @@ Section "Tools (source and binary)"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-    ; TODO temporary because we have modified tools
-    ; StrCpy $1 "http://boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/"
     inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
     Pop $1
     StrCmp $1 "OK" success
@@ -650,17 +622,10 @@ Section "Tools (source and binary)"
   failed_again:
   cancel:
     Return
-;    Abort
   success:
     Push $0
     Push ""
-
-;  StrCmp $select_new_mirror 1 0 dont_skip
-;  Return
-; dont_skip:
-
     StrCpy $installed_tools 1
-
 SectionEnd
 
 ; ---------------------------------------------------------------------
@@ -672,10 +637,6 @@ Section -unzip
     Pop $1
     IfErrors bail
     Pop $0
-
-;    MessageBox MB_OK "File: $0, Target: $1"
-
-;    nsisunz::UnzipToLog $INSTDIR\$1$0 $INSTDIR\$1
     ZipDLL::extractall $INSTDIR\$1$0 $INSTDIR\$1
     Pop $2 ; error message
     StrCmp $2 "success" +2 0
