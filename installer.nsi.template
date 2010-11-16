@@ -49,7 +49,6 @@ BrandingText "${PUBLISHER} - Installer created with NSIS (Nullsoft Scriptable In
 !insertmacro MUI_PAGE_LICENSE "license.txt"
 !define MUI_PAGE_HEADER_TEXT  "Boost Libraries License Agreement"
 !insertmacro MUI_PAGE_LICENSE "guidelines.rtf"
-;Page custom CompilerAutoDetect
 Page custom selectMirrorPage leaveSelectMirror
 Page custom defaultVariantsPage leaveDefaultVariants
 !insertmacro MUI_PAGE_COMPONENTS
@@ -121,12 +120,9 @@ Function selectMirrorPage
     !insertmacro MUI_HEADER_TEXT "Select Mirror" "Choose which mirror you want to use to download ${NAME}."
 
     StrCmp $mirror_names "" 0 skip_mirror_download
-;    nxs::Show /NOUNLOAD "Download mirror list..." /h 0 /can 0 /top "Trying to download mirror list. Please wait."
     inetc::get /NOCANCEL /POPUP "Download mirror list..." "http://www.boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
     Pop $0
     StrCmp $0 "OK" download_ok
-;    call DisableDownloadSections
-;    nxs::Destroy
     BringToFront
     MessageBox MB_OK "Failed to download mirror list, all downloadable content has been disabled."
     Abort
@@ -276,20 +272,13 @@ Function initSelectionFlags
     IfErrors bail
     StrCpy $2 $1 5
     StrCmp $2 "Boost" 0 not_lib
-;    MessageBox MB_OK "$1"
     Push $0
     call SelectDefaultVariants
-;    SectionGetFlags $0 $1
-;    IntOp $1 $1 & 65
-;    StrCmp $1 0 not_selected
-;    StrCpy $1 1
-;  not_selected:
     StrCpy $selected_libs "$selected_libs1"
   not_lib:
     IntOp $0 $0 + 1
     goto next
   bail:
-;    MessageBox MB_OK $selected_libs
 FunctionEnd
 
 ; Stack 0: compiler name
@@ -312,17 +301,9 @@ Function MaybeSelectVariant
     Exch 2
     ; r0, r1, r2
 
-;    Push $0
-;    Push $1
-;    Push $2
     Push $3
     Push $4
 
-;    MessageBox MB_OK $1
-
-;    ${If} $no_default_compilers == 1
-;        StrCpy $3 1
-;    ${Else}
         ${If} $0 == "VC7.1"
             !insertmacro MUI_INSTALLOPTIONS_READ $3 "default_variants.ini" "Field 4" "State"
         ${ElseIf} $0 == "VC8.0"
@@ -332,15 +313,10 @@ Function MaybeSelectVariant
         ${Else}
             !insertmacro MUI_INSTALLOPTIONS_READ $3 "default_variants.ini" "Field 7" "State"
         ${EndIf}
-;    ${EndIf}
 
     StrCpy $5 0
 
     ${If} $3 != 0
-;        ${If} $no_default_variants == 1
-;            StrCpy $5 1
-;            goto bail
-;        ${EndIf}
 
         StrCpy $3 8
       next:
@@ -358,7 +334,6 @@ Function MaybeSelectVariant
     ${If} $5 == 0
         !insertmacro UnselectSection $2
     ${Else}
-        ;MessageBox MB_OK $2
         !insertmacro SelectSection $2
     ${EndIf}
 
@@ -421,7 +396,6 @@ Function .onSelChange
     StrCmp $3 "Boost" 0 not_lib
     StrCpy $3 $selected_libs 1 $1 ; $3 == old flag
     SectionGetFlags $0 $4 ; $4 == flag
-;    IntOp $5 $4 & ${SF_SELECTED}
     IntOp $5 $4 & 65
     StrCmp $5 0 not_true
     StrCpy $5 1
@@ -442,12 +416,9 @@ Function .onSelChange
     IntOp $0 $0 + 1
     goto next
   bail:
-    ;MessageBox MB_OK $selected_libs
 FunctionEnd
 
 Function .onInit
-    ;MessageBox MB_OK $(^FONT)
-
     !insertmacro MUI_INSTALLOPTIONS_EXTRACT "select_mirror.ini"
     !insertmacro MUI_INSTALLOPTIONS_EXTRACT "default_variants.ini"
 
@@ -519,7 +490,6 @@ Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\${NAME}"
   CreateShortCut "$SMPROGRAMS\${NAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-;  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME} Command Prompt.lnk" "%%COMSPEC%%" "/K $\"$INSTDIR\boostvars.bat$\""
 
 SectionEnd
 
@@ -564,11 +534,6 @@ Function DownloadFile
     Push "lib\"
 FunctionEnd
 
-;Section "Documentation"
-;  StrCmp $select_new_mirror 1 0 dont_skip
-;  Return
-; dont_skip:
-
 Section "Source and Documentation"
     AddSize 14958
     StrCpy $0 "boost_${NORMALIZED_VERSION}_doc_src.zip"
@@ -595,11 +560,6 @@ Section "Source and Documentation"
     Push ""
 
 SectionEnd
-
-;Section "Source"
-;  StrCmp $select_new_mirror 1 0 dont_skip
-;  Return
-; dont_skip:
 
 Section "Tools (source and binary)"
     AddSize 1122
