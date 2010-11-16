@@ -642,25 +642,30 @@ if __name__ == '__main__':
     # compares the result with the original.  NOTE: it depends on
     # having a working diff in the PATH.  The output should only
     # differ by blank lines and the occasional comment
-    open('instnsi.txt', 'w').write(
+    from tempfile import TemporaryFile
+    f = TemporaryFile(mode='w')
+    f.write(
         generate(
             dvd=False, 
             version=r'${NORMALIZED_VERSION}', 
             human_version=r'%(human_version)s', 
             sections='%(sections)s'))
+    f.flush()
     import os
-    os.system('diff -Bdu installer.nsi.template instnsi.txt')
+    os.system('diff -wdu test\installer.nsi.template ' + f.name)
 
     print
     print '=============================='
     print
     
-    open('dvd-instnsi.txt', 'w').write(
+    f = TemporaryFile(mode='w')
+    f.write(
         generate(
             dvd=True, 
             version=r'${NORMALIZED_VERSION}', 
             human_version=r'%(human_version)s', 
             sections='%(sections)s'))
+    f.flush()
     import os
-    os.system('diff -Bdu dvd-installer.nsi.template dvd-instnsi.txt')
+    os.system('diff -wdu test\dvd-installer.nsi.template ' + f.name)
     
