@@ -1,4 +1,5 @@
 Tool Installation
+=================
 
 (from http://www.pion.org/files/pion-platform/common/doc/README.msvc)
 
@@ -18,7 +19,48 @@ and add the following lines at the top, after "@echo off":
 @set INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;%INCLUDE%
 @set LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;%LIB%
 
------
+
+64-Bit Tools
+------------
+
+Useful Links
+............
+
+* VS Express (General)
+  * http://en.wikipedia.org/wiki/Microsoft_Visual_Studio_Express
+
+* SDKs
+
+  Each SDK comes with 64-bit tools built for compatibility with one
+  version of Visual C++.
+  
+  * LATEST: http://msdn.microsoft.com/en-us/windows/bb980924.aspx
+  * LEGACY: http://msdn.microsoft.com/en-us/windows/ff851942.aspx
+
+* VS 2005 Express
+  * Latest SDK: "Microsoft Windows SDK Update for Windows Vista and .NET Framework 3."
+    http://www.microsoft.com/downloads/details.aspx?FamilyID=4377F86D-C913-4B5C-B87E-EF72E5B4E065
+
+  * Official: http://msdn.microsoft.com/en-us/library/9yb4317s(v=VS.80).aspx
+  * HOTFIX: http://support.microsoft.com/kb/949009/
+
+* VS 2008 Express
+  * Latest SDK: "Windows SDK for Windows 7 and .NET Framework 3.5 SP1" 
+    http://www.microsoft.com/downloads/details.aspx?FamilyID=c17ba869-9671-4330-a63e-1fd44e0e2505
+
+  * Official: http://msdn.microsoft.com/en-us/library/9yb4317s(v=VS.90).aspx
+  * Detailed Instructions: http://jenshuebel.wordpress.com/2009/02/12/visual-c-2008-express-edition-and-64-bit-targets/
+  * Quick Patch: http://www.cppblog.com/xcpp/archive/2009/09/09/vc2008express_64bit_win7sdk.html
+
+
+* VS 2010 Express
+  * Latest SDK: "Microsoft Windows SDK for Windows 7 and .NET Framework 4"
+    http://www.microsoft.com/downloads/en/details.aspx?FamilyID=6b6c21d2-2006-4afa-9702-529fa782d63b
+
+  * http://msdn.microsoft.com/en-us/library/9yb4317s.aspx
+  * http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
+
+Note:
 
 To build 64-bit binaries, you need to install the platform SDK, which
 contains 64-bit tools.  The platform SDK also contains a script for setting up the tools, 
@@ -35,8 +77,8 @@ so right now, I'm having some success by creating that file to contain
 It's not clear yet whether that is getting the variant setup quite
 right because that script also sets up Debug or Release mode.
 
-====
-
+Building The Installer
+======================
 
 Here is the script that I use to produce the installer.
 
