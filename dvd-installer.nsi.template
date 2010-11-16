@@ -563,7 +563,7 @@ SectionEnd
 ;--------------------------------
 
 Section "Add to path"
-  StrCmp $installed_tools "1" 0 false
+  StrCmp $installed_tools "0" 0 false
   MessageBox MB_YESNO "Boost prebuilt tools were installed to $INSTDIR\bin. Would you like to add that to PATH?" IDYES true IDNO false
 true:
   Push "$INSTDIR\bin"
