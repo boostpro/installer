@@ -18,6 +18,23 @@ and add the following lines at the top, after "@echo off":
 @set INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;%INCLUDE%
 @set LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;%LIB%
 
+-----
+
+To build 64-bit binaries, you need to install the platform SDK, which
+contains 64-bit tools.  The platform SDK also contains a script for setting up the tools, 
+c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\setenv.cmd
+
+VS 2010 doesn't come with 
+
+  c:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/bin/x86_amd64/vcvarsx86_amd64.bat
+
+so right now, I'm having some success by creating that file to contain
+
+  call "c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\setenv.cmd"
+
+It's not clear yet whether that is getting the variant setup quite
+right because that script also sets up Debug or Release mode.
+
 ====
 
 
