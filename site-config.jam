@@ -1,0 +1,28 @@
+# Keep this file under version control!  Rather than copying it,
+# either symlink to it (*nix) or put something like the following in
+# your actual site-config.jam:
+#
+#     # Just forward to the file in version control
+#     include "C:/work/installer/site-config.jam" ;
+#
+
+modules.poke : ZLIB_SOURCE : c:/work/zlib-1.2.5 ;
+modules.poke : BZIP2_SOURCE : c:/work/bzip2-1.0.6 ;
+
+# These don't seem to work for x64 builds
+# modules.poke : ICU_PATH : c:/work/icu ;
+# modules.poke : ICU_LINK : /LIBPATH:c:/work/icu/lib64 ;
+
+# Map toolsets to SDK versions
+sdk-8.0express = 6.0 ;
+sdk-9.0express = 6.1 ;
+sdk-10.0express = 7.1 ;
+
+for version in 10.0express 9.0express 8.0express 
+{
+    local sdk = "c:/Program Files/Microsoft SDKs/Windows/v"$(sdk-$(version)) ;
+    using msvc : $(version) : : <sdk>$(sdk) ;
+}
+
+using python : 2.7 : c:/python27/python ;
+using mpi ;
