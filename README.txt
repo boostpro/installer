@@ -1,3 +1,24 @@
+Library Installation
+====================
+
+Boost.IOStreams
+---------------
+
+zlib and libgz should be downloaded as source per 
+http://www.boost.org/doc/libs/1_44_0/libs/iostreams/doc/installation.html#overview
+and pointed at via those 
+
+
+MPI
+---
+
+Boost.Build currently auto-detects the Microsoft Compute Cluster Pack,
+but not Microsoft HPC Pack 2008 SDK, which is more modern.  It is
+currently unknown whether we can force Boost.Build to use that
+instead.  It also seems to be implied that the later SDK may not work
+for Windows Server 2003 (and thus XP64, which is the same OS
+underneath).
+
 Tool Installation
 =================
 
@@ -47,6 +68,11 @@ Useful Links
 * VS 2008 Express
   * Latest SDK: "Windows SDK for Windows 7 and .NET Framework 3.5 SP1" 
     http://www.microsoft.com/downloads/details.aspx?FamilyID=c17ba869-9671-4330-a63e-1fd44e0e2505
+    
+    This one gets installed under C:\Program Files\Microsoft SDKs\Windows\v7.0
+    However, it doesn't come with mt.exe.  Therefore we fall back to “Windows® Software Development Kit Update for Windows Vista™”, which installs under C:\Program Files\Microsoft SDKs\Windows\v6.1
+    
+    That one, however, does not support IA64.
 
   * Official: http://msdn.microsoft.com/en-us/library/9yb4317s(v=VS.90).aspx
   * Detailed Instructions: http://jenshuebel.wordpress.com/2009/02/12/visual-c-2008-express-edition-and-64-bit-targets/
