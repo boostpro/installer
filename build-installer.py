@@ -289,7 +289,7 @@ def main(argv):
         '--build-dir=%s' % build_dir,
         '--stagedir=%s' % stage_dir,
         '--debug-configuration',
-        '--j2',
+        '-j2',
     ]
 
     if build_libs or do_build_tools:
