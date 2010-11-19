@@ -75,14 +75,17 @@ def build_bjam(root, log):
     return os.path.join(src, bjam).strip()
 
 def build_libraries(root, bjam, toolsets, log):
-    for toolset in toolsets:
-        print 'Building with %s..' % toolset,
+    for lib in glob.glob(os.path.join(root, 'libs', '*', 'build')):
+        # This library just has some preprocessing stuff in its build subdirectory
+        if os.path.split(lib)[0].endswith('function_types'): continue
 
-        cmd = bjam + [
-            '--build-type=complete',
-            'toolset=%s' % toolset,
-            'stage'
-        ]
+        sys.stdout.write('Building in %s..' % lib)
+
+        cmd = bjam + ('''debug release address-model=64
+                         threading=multi/link=shared,static/runtime-link=shared
+                         threading=multi,single/link=static/runtime-link=static
+                         stage toolset='''
+                      + ','.join(toolsets)).split()
 
         status, output = execute_with_progress(
             os.path.join(root, lib), cmd, r'^(?!common.mkdir)\S', log, bjam_trigger_re)
