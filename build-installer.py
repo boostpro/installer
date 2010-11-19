@@ -281,7 +281,7 @@ def main(argv):
 
     log = open('build.log', 'w', 0)
 
-    toolsets = open('toolsets.txt').read().split('\n')
+    toolsets = open('toolsets.txt').read().split()
     compiler_names = read_key_value_pairs('compiler-names.txt')
 
     bjam_options = [
