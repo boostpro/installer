@@ -24,7 +24,9 @@ def determine_boost_version(root):
             return i.rsplit(' ', 1)[1].strip()[1:-1]
     raise Exception('Failed to determine boost version')
 
-def execute_with_progress(working_directory, args, progress_re='', log=None):
+bjam_trigger_re = r'^\.\.\.found [0-9]+ targets\.\.\.'
+
+def execute_with_progress(working_directory, args, progress_re='', log=None, trigger_re = None):
     if log is not None:
         log.write("\n*** executing '%s'\n\n" % str(args))
 
@@ -36,6 +38,13 @@ def execute_with_progress(working_directory, args, progress_re='', log=None):
         line = process.stdout.readline()
         if line == '':
             break
+
+        if trigger_re:
+            if re.match(trigger_re, line):
+                trigger_re = None
+            else:
+                continue
+
         if log is not None:
             log.write(line)
         output += line
@@ -76,7 +85,7 @@ def build_libraries(root, bjam, toolsets, log):
         ]
 
         status, output = execute_with_progress(
-            root, cmd, '^\\.\\.\\.on \\d+th target\\.\\.\\.', log)
+            os.path.join(root, lib), cmd, r'^(?!common.mkdir)\S', log, bjam_trigger_re)
 
 def build_tools(root, bjam, log):
     cmd = bjam
@@ -85,7 +94,7 @@ def build_tools(root, bjam, log):
     print 'Building tools..',
 
     status, output = execute_with_progress(
-        tools, cmd, r'compile-c-c\+\+', log)
+        tools, cmd, r'compile-c-c\+\+', log, bjam_trigger_re)
 
     shutil.rmtree(os.path.join(root,'bin'), ignore_errors=True)
     os.rename(os.path.join(root, 'dist/bin'), os.path.join(root, 'bin'))
