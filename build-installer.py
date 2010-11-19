@@ -52,6 +52,8 @@ def build_bjam(root, log):
     src = os.path.join(root, 'tools/jam/src')
     build_script = src + '/build.bat'
     status, output = execute_with_progress(src, build_script, '', log)
+    if status:
+        raise RuntimeError, "FAILED: %(args)s\nwith status %(status)s" % locals()
 
     if status != 0:
         raise Exception('Failed to build bjam')
