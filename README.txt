@@ -8,6 +8,12 @@ zlib and libgz should be downloaded as source per
 http://www.boost.org/doc/libs/1_44_0/libs/iostreams/doc/installation.html#overview
 and pointed at via those 
 
+Regex
+-----
+
+ICU support is tricky.  Among other things, regex only supports
+runtime-link-dynamic when ICU is used.  Not sure how to handle that
+best in the long run.
 
 MPI
 ---

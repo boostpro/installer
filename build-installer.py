@@ -19,7 +19,7 @@ def make_directories(dirs):
             pass
 
 def determine_boost_version(root):
-    for i in open(os.path.join(root, 'boost/version.hpp')):
+    for i in open(os.path.join(root, 'boost', 'version.hpp')):
         if i.startswith('#define BOOST_LIB_VERSION'):
             return i.rsplit(' ', 1)[1].strip()[1:-1]
     raise Exception('Failed to determine boost version')
@@ -58,8 +58,8 @@ def execute_with_progress(working_directory, args, progress_re='', log=None, tri
 def build_bjam(root, log):
     print 'Building bjam executable..',
 
-    src = os.path.join(root, 'tools/jam/src')
-    build_script = src + '/build.bat'
+    src = os.path.join(root, 'tools', 'jam', 'src')
+    build_script = os.path.join(src, 'build.bat')
     status, output = execute_with_progress(src, build_script, '', log)
     if status:
         raise RuntimeError, "FAILED: %(args)s\nwith status %(status)s" % locals()
@@ -100,8 +100,8 @@ def build_tools(root, bjam, log):
         tools, cmd, r'compile-c-c\+\+', log, bjam_trigger_re)
 
     shutil.rmtree(os.path.join(root,'bin'), ignore_errors=True)
-    os.rename(os.path.join(root, 'dist/bin'), os.path.join(root, 'bin'))
-    shutil.copyfile(bjam[0], os.path.join(root, 'bin/bjam.exe'))
+    os.rename(os.path.join(root, 'dist', 'bin'), os.path.join(root, 'bin'))
+    shutil.copyfile(bjam[0], os.path.join(root, 'bin', 'bjam.exe'))
 
 variant_re = re.compile(r'(?:lib)?(boost_\w+)-(\w+)(-mt)?(-[a-z]+)?-(?:[0-9_]+)\.lib')
 
@@ -212,22 +212,22 @@ def build_zip_files(boostdir, version, libdir, zipdir, log):
         base = os.path.splitext(f)[0]
         if not base.endswith(version):
             continue
-        args = [ zip_program, 'u', '-tzip', '%s/%s.zip' % (zipdir, base), f ]
+        args = [ zip_program, 'u', '-tzip', os.path.join(zipdir, base+'.zip'), f ]
         if not f.startswith('libboost'):
             args.append(base + '.dll')
         print 'Zipping %s..' % base,
         execute_with_progress(libdir, args, log=log)
 
-    args = [ zip_program, 'u', '-tzip', '%s/boost_%s_headers.zip' % (zipdir, version), 'boost' ]
+    args = [ zip_program, 'u', '-tzip', os.path.join(zipdir, 'boost_%s_headers.zip' % version), 'boost' ]
     print 'Zipping headers..',
     execute_with_progress(boostdir, args, log=log)
 
-    args = [ zip_program, 'u', '-tzip', '%s/boost_%s_tools.zip' % (zipdir, version), 'bin', 'tools' ]
+    args = [ zip_program, 'u', '-tzip', os.path.join(zipdir, 'boost_%s_tools.zip' % version), 'bin' ]
     print 'Zipping tools..',
     execute_with_progress(boostdir, args, log=log)
 
     args = [
-        zip_program, 'u', '-tzip', '%s/boost_%s_doc_src.zip' % (zipdir, version),
+        zip_program, 'u', '-tzip', os.path.join(zipdir, 'boost_%s_doc_src.zip' % version),
         'libs',
         'doc',
         'more',
