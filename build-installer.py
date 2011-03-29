@@ -81,7 +81,7 @@ def build_libraries(root, bjam, toolsets, log):
 
         sys.stdout.write('Building in %s..' % lib)
 
-        cmd = bjam + ('''debug release address-model=64
+        cmd = bjam + ('''debug release
                          threading=multi/link=shared,static/runtime-link=shared
                          threading=multi,single/link=static/runtime-link=static
                          stage toolset='''
