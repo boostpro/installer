@@ -154,6 +154,10 @@ upload the binaries to sourceforge, and add mirrors to the mirrors.txt
 file, but the procedure for that has changed. It's pretty simple though,
 you can rsync (or something similar) the files from the server to SF.
 
+  sudo mv 1_46_1 1.46.1
+  rsync -avP 1.46.1 david_abrahams,boost@frs.sourceforge.net:/home/frs/project/b/bo/boost/boost-binaries/
+  sudo mv 1.46.1 1_46_1 
+
 New libraries need to be added to "lib-names.txt".
 
 There are a few manual steps as you can see, but they take me like 5
