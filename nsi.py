@@ -125,7 +125,7 @@ Function selectMirrorPage
     !insertmacro MUI_HEADER_TEXT "Select Mirror" "Choose which mirror you want to use to download ${NAME}."
 
     StrCmp $mirror_names "" 0 skip_mirror_download
-    inetc::get /NOCANCEL /POPUP "Download mirror list..." "http://www.boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
+    inetc::get /NOCANCEL "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
     Pop $0
     StrCmp $0 "OK" download_ok
     BringToFront
@@ -545,7 +545,7 @@ Function DownloadFile
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
 
     ${If} $use_boost_consulting == 1
-        StrCpy $1 "http://www.boost-consulting.com/boost-binaries/%(version)s/"
+        StrCpy $1 "http://www.boostpro.com/boost-binaries/%(version)s/"
     ${EndIf}
 
   try_again:
@@ -554,9 +554,9 @@ Function DownloadFile
     StrCmp $1 "OK" success
     StrCmp $1 "Cancelled" cancel
   failed_again:
-    ; failed twice, try boost-consulting.com
+    ; failed twice, try boostpro.com
     ${If} $use_boost_consulting == 0
-        StrCpy $1 "http://www.boost-consulting.com/boost-binaries/%(version)s/"
+        StrCpy $1 "http://www.boostpro.com/boost-binaries/%(version)s/"
         StrCpy $use_boost_consulting 1
         goto try_again
     ${Else}
