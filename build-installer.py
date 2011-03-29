@@ -28,7 +28,7 @@ bjam_trigger_re = r'^\.\.\.found [0-9]+ targets\.\.\.'
 
 def execute_with_progress(working_directory, args, progress_re='', log=None, trigger_re = None):
     if log is not None:
-        log.write("\n*** executing '%s'\n\n" % str(args))
+        log.write("\n*** in %s: executing '%s'\n\n" % (working_directory,str(args)))
 
     process = subprocess.Popen(
         args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
