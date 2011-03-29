@@ -58,7 +58,6 @@ def execute_with_progress(working_directory, args, progress_re='', log=None, tri
 def build_bjam(root, log):
     print 'Building bjam executable..',
 
-    src = os.path.join(root, 'tools', 'jam', 'src')
     build_script = os.path.join(root, 'bootstrap.bat')
     status, output = execute_with_progress(root, build_script, '', log)
     if status:
@@ -67,12 +66,7 @@ def build_bjam(root, log):
     if status != 0:
         raise Exception('Failed to build bjam')
 
-    m = re.search('\\[COMPILE\\] (.*)', output)
-    bjam = m and m.group(1)
-    if bjam is None:
-        raise Exception('Failed to determine bjam executable path')
-
-    return os.path.join(src, bjam).strip()
+    return os.path.join(root, 'bjam.exe')
 
 def build_libraries(root, bjam, toolsets, log):
     for lib in glob.glob(os.path.join(root, 'libs', '*', 'build')):
