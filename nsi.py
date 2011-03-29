@@ -481,11 +481,11 @@ Section "%(title)s"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-    inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
-    Pop $1
-    StrCmp $1 "OK" success
-    StrCmp $1 "Cancelled" cancel
-    MessageBox MB_OK "Download failed: $1"
+    inetc::get "$1$0" "$INSTDIR\$0" /END
+    Pop $2
+    StrCmp $2 "OK" success
+    StrCmp $2 "Cancelled" cancel
+    MessageBox MB_OK "Download $1$0 failed: $2"
     StrCmp $select_new_mirror 1 failed_again
     StrCpy $select_new_mirror 1
     StrCpy $R9 -4
@@ -544,12 +544,16 @@ Function DownloadFile
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
 
+    ${If} $1 == "http://www.boostpro.com/boost-binaries/%(version)s/"
+        StrCpy $use_boost_consulting 1
+    ${EndIf}
+
     ${If} $use_boost_consulting == 1
         StrCpy $1 "http://www.boostpro.com/boost-binaries/%(version)s/"
     ${EndIf}
 
   try_again:
-    inetc::get /POPUP "$0" "$1$0" "$INSTDIR\lib\$0" /END
+    inetc::get "$1$0" "$INSTDIR\lib\$0" /END
     Pop $1
     StrCmp $1 "OK" success
     StrCmp $1 "Cancelled" cancel
@@ -560,7 +564,8 @@ Function DownloadFile
         StrCpy $use_boost_consulting 1
         goto try_again
     ${Else}
-        MessageBox MB_OK "Files could not be downloaded."
+        MessageBox MB_OK "File could not be downloaded: $0.zip"
+        Abort
     ${EndIf}
   cancel:
     StrCpy $use_boost_consulting 0
