@@ -223,10 +223,9 @@ def build_zip_files(boostdir, version, libdir, zipdir, log):
     args = [
         zip_program, 'u', '-tzip', os.path.join(zipdir, 'boost_%s_doc_src.zip' % version),
         'libs',
+        'dist',
         'doc',
         'more',
-        'people',
-        'wiki',
         'boost.css',
         'boost.png',
         'boost-build.jam',
@@ -237,6 +236,7 @@ def build_zip_files(boostdir, version, libdir, zipdir, log):
         'INSTALL',
         'Jamroot',
         'LICENSE_1_0.txt',
+        'project-config.jam',
         'rst.css'
     ]
 
