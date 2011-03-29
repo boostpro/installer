@@ -59,8 +59,8 @@ def build_bjam(root, log):
     print 'Building bjam executable..',
 
     src = os.path.join(root, 'tools', 'jam', 'src')
-    build_script = os.path.join(src, 'build.bat')
-    status, output = execute_with_progress(src, build_script, '', log)
+    build_script = os.path.join(root, 'bootstrap.bat')
+    status, output = execute_with_progress(root, build_script, '', log)
     if status:
         raise RuntimeError, "FAILED: %(args)s\nwith status %(status)s" % locals()
 
@@ -236,7 +236,8 @@ def build_zip_files(boostdir, version, libdir, zipdir, log):
         'boost.css',
         'boost.png',
         'boost-build.jam',
-        'configure',
+        'bootstrap.bat',
+        'bootstrap.sh',
         'index.htm',
         'index.html',
         'INSTALL',
