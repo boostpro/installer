@@ -10,6 +10,7 @@ boost_math_tr1f = Boost Math TR1 (float)
 boost_math_tr1l = Boost Math TR1 (long double)
 boost_math_tr1 = Boost Math TR1
 boost_mpi = Boost MPI
+boost_mpi_python = Boost MPI (Python bindings)
 boost_program_options = Boost ProgramOptions
 boost_python = Boost Python
 boost_random = Boost Random
