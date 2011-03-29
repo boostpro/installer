@@ -85,7 +85,7 @@ Function RandomNumber
 
     IntOp $R0 $R0 * "13"
     IntOp $R0 $R0 + "3"
-    IntOp $R0 $R0 %% "1048576" # Values goes from 0 to 1048576 (2^20)
+    IntOp $R0 $R0 % "1048576" # Values goes from 0 to 1048576 (2^20)
  
     Exch $R0
 FunctionEnd
