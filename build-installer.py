@@ -300,12 +300,12 @@ def main(argv):
         build_tools(root, [bjam] + bjam_options, log)
 
     if build_zips:
-        build_zip_files(root, version, os.path.join(stage_dir, 'lib'), zip_dir, log)
+        build_zip_files(root, version, stage_dir, zip_dir, log)
 
     if build_installer:
         lib_to_name = read_key_value_pairs('lib-names.txt')
         generate_installer(installer_dir,
-                           os.path.join(stage_dir, 'lib'),
+                           stage_dir,
                            lib_to_name,
                            compiler_names,
                            version,
