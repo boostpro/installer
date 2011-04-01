@@ -69,16 +69,13 @@ def build_bjam(root, log):
     return os.path.join(root, 'bjam.exe')
 
 def build_libraries(root, bjam, toolsets, log):
-    for lib in glob.glob(os.path.join(root, 'libs', '*', 'build')):
+    for lib in [root]: # glob.glob(os.path.join(root, 'libs', '*', 'build')):
         # This library just has some preprocessing stuff in its build subdirectory
         if os.path.split(lib)[0].endswith('function_types'): continue
 
         sys.stdout.write('Building in %s..' % lib)
 
-        cmd = bjam + ('''debug release
-                         threading=multi/link=shared,static/runtime-link=shared
-                         threading=multi,single/link=static/runtime-link=static
-                         stage toolset='''
+        cmd = bjam + ('''--build-type=complete stage toolset='''
                       + ','.join(toolsets)).split()
 
         status, output = execute_with_progress(
@@ -300,12 +297,12 @@ def main(argv):
         build_tools(root, [bjam] + bjam_options, log)
 
     if build_zips:
-        build_zip_files(root, version, stage_dir, zip_dir, log)
+        build_zip_files(root, version, os.path.join(stage_dir, 'lib'), zip_dir, log)
 
     if build_installer:
         lib_to_name = read_key_value_pairs('lib-names.txt')
         generate_installer(installer_dir,
-                           stage_dir,
+                           os.path.join(stage_dir, 'lib'),
                            lib_to_name,
                            compiler_names,
                            version,
