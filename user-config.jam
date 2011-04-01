@@ -19,4 +19,4 @@ for version in 10.0express 9.0express 8.0express
 }
 
 using python : 2.7 : c:/python27/python ;
-using mpi ;
+# using mpi ;
