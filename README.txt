@@ -124,6 +124,15 @@ for instance, this produced the 1.39 installer:
   > build-installer.py --build-libs --zip --build-installer \
     --build-tools e:\boost\boost_1_39_0
 
+New libraries need to be added to "lib-names.txt".  In a bash
+shell at BOOST_ROOT,
+
+  grep -hE '\<lib ' libs/*/build/Jamfile* | sed -e 's/^.*\<lib \([^ ]*\).*$/\1/' | sort
+
+will get you a list.
+
+You also need 7-zip installed. A standard install should just work.
+
 After this is done you need to upload the binaries. I do this with
 something like:
 
@@ -158,8 +167,6 @@ you can rsync (or something similar) the files from the server to SF.
   rsync -avP 1.46.1 david_abrahams,boost@frs.sourceforge.net:/home/frs/project/b/bo/boost/boost-binaries/
   sudo mv 1.46.1 1_46_1 
 
-New libraries need to be added to "lib-names.txt".
-
 There are a few manual steps as you can see, but they take me like 5
 minutes to perform so I didn't bother scripting them.
 
@@ -167,6 +174,4 @@ Of course, you can just do the building if you want to and I can do the
 manual steps when the build is done. For me, the build step takes more
 than 24 hours, so it locks up my work station during that time. I also
 sometimes have to do it incrementally because of lack disk space.
-
-Oh, you also need 7-zip installed. A standard install should just work.
 
