@@ -3,3 +3,9 @@ build.log
 boost_*_setup.exe
 boost_*_setup.nsi
 .DS_Store
+/redhat/Boost145x64EL5.iso
+/redhat/SRPMS/boost-1.33.1-10.el5.src.rpm
+/redhat/SRPMS/boost-1.39.0-8.1.el6.src.rpm
+/redhat/SRPMS/boost-1.39.0-8orc.src.rpm
+/redhat/status-gcc41.log
+/redhat/status-gcc44.log
