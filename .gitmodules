@@ -1,0 +1,3 @@
+[submodule "zlib"]
+	path = zlib
+	url = git.boostpro.com:boost/zlib.git
