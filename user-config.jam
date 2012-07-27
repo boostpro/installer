@@ -15,8 +15,12 @@ sdk-10.0express = 7.1 ;
 for version in 10.0express 9.0express 8.0express 
 {
     local sdk = "c:/Program Files/Microsoft SDKs/Windows/v"$(sdk-$(version)) ;
-    using msvc : $(version) : : <sdk>$(sdk) ;
+    # If we need to use VS express, uncomment this line
+    # using msvc : $(version) : : <sdk>$(sdk) ;
 }
+
+# This works for the stock msvc release
+using msvc ;
 
 using python : 2.7 : c:/python27/python ;
 # using mpi ;
