@@ -4,3 +4,6 @@
 [submodule "bzip2"]
 	path = bzip2
 	url = git@git.boostpro.com:boost/bzip2.git
+[submodule "boost"]
+	path = boost
+	url = git@git.boostpro.com:boost/boost.git
