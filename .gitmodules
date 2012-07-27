@@ -1,6 +1,6 @@
 [submodule "zlib"]
 	path = zlib
-	url = git.boostpro.com:boost/zlib.git
+	url = git@git.boostpro.com:boost/zlib.git
 [submodule "bzip2"]
 	path = bzip2
-	url = git.boostpro.com:boost/bzip2.git
+	url = git@git.boostpro.com:boost/bzip2.git
