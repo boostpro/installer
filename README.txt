@@ -4,9 +4,14 @@ Library Installation
 Boost.IOStreams
 ---------------
 
-zlib and libgz should be downloaded as source per 
+zlib and libbz2 should be downloaded as source per 
 http://www.boost.org/doc/libs/1_44_0/libs/iostreams/doc/installation.html#overview
-and pointed at via those 
+and pointed at via the bjam variables BZIP2_SOURCE and ZLIB_SOURCE described in 
+http://www.boost.org/doc/libs/1_44_0/libs/iostreams/doc/installation.html#bjam.
+
+   bjam -s BZIP2_SOURCE=... -s ZLIB_SOURCE=...
+
+
 
 Regex
 -----
