@@ -1,5 +1,5 @@
-modules.poke : ZLIB_SOURCE : c:\\work\\zlib-1.2.5 ;
-modules.poke : BZIP2_SOURCE : c:\\work\\bzip2-1.0.6 ;
+modules.poke : ZLIB_SOURCE : c:\\work\\installer\\zlib ;
+modules.poke : BZIP2_SOURCE : c:\\work\\installer\\bzip2 ;
 
 # These don't seem to work for x64 builds and ICU support only allows
 # runtime-link-dynamic anyway; we're not sure how to adjust for that
