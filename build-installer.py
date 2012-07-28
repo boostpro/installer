@@ -147,6 +147,9 @@ def variant_name(v):
 def generate_installer(installer_dir, libdir, lib_to_name, compiler_names, version, dvd):
     libs = [ decompose_variant(lib) for lib in os.listdir(libdir) ]
     libs = filter(lambda x: x is not None, libs)
+    for x in libs:
+        if x.name not in lib_to_name:
+            print "Missing '%s' in \"lib-names.txt\"" % x.name
     libs.sort(key=lambda x: (lib_to_name[x.name], x.compiler))
 
     sections = ''
