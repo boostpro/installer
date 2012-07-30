@@ -4,6 +4,7 @@ import sys
 import re
 import os.path
 import subprocess
+import multiprocessing
 import itertools
 import glob
 import shutil
@@ -287,7 +288,7 @@ def main(argv):
         '--build-dir=%s' % build_dir,
         '--stagedir=%s' % stage_dir,
         '--debug-configuration',
-        '-j2',
+        '-j%d' % (multiprocessing.cpu_count() * 2),
     ]
 
     if build_libs or do_build_tools:
