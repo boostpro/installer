@@ -36,11 +36,8 @@ From the [[http://nsis.sourceforge.net/ZipDLL_plug-in][website]]:
 
 This change has been made for the ZIP file which is committed to the installer
 project.
-* Clone the installer project into c:\work\installer
+* Clone the installer project into e:\installer
 #+begin_src cmd
-cd \
-mkdir work
-cd work
 git clone --recursive git@git.boostpro.com:boost/installer.git
 #+end_src
 * Invoke the build-installer.py script
