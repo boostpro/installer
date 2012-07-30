@@ -43,7 +43,7 @@ git clone --recursive git@git.boostpro.com:boost/installer.git
 * Invoke the build-installer.py script
 #+begin_src cmd
 build-installer.py --build-libs --zip --build-installer --build-tools \
-  [--dvd] c:\work\installer\boost
+  [--dvd] e:\installer\boost
 #+end_src
 * NOTE To build Boost.IOStreams, these additional dependencies are made available
 ** zlib source code, from http://www.zlib.net/
