@@ -1,0 +1,53 @@
+INSTALL  -*- mode: org; fill-column: 78 -*-
+
+#+STARTUP: content fninline hidestars
+#+SEQ_TODO: STARTED TODO APPT WAITING(@) DELEGATED(@) DEFERRED(@) SOMEDAY(@) PROJECT | DONE(@) CANCELED(@) NOTE
+#+DRAWERS: PROPERTIES LOGBOOK OUTPUT SCRIPT SOURCE DATA
+
+* Install: Visual Studio Professional 2005, 2008, 2010, and all service packs
+** For VS 2008, install .NET 3.51 from the Role Management Tool on 2008 R2
+While trying to install Visual Studio 2008 on a Windows 2008 R2 machine you
+may get the following error:
+
+    You must use the Role Management Tool to install or configure Microsoft
+    .NET Framework 3.5
+
+This is because Windows 2008 R2 ships with the .NET 3.5.1 framework. You just
+need to enable the feature from Server Manager.
+
+So before starting the Visual Studio 2008 Setup install the .NET Framework
+3.5.1 Features from the Add Features Wizard in Server Manager.
+
+After that when you run the Visual Studio 2008 Setup, the installer will
+detect that the 3.5 framework is already installed and skip to the next step.
+* Install Git, in order to clone the BoostPro installer project
+It can be installed from http://code.google.com/p/msysgit/downloads/list.
+* Install 7-zip
+* Install Python 2.7
+* Install NSIS
+** Install the NSIS dependencies (Inetc, Nxs, ZipDLL)
+These are installed by copying their Plugins/*.dll files into the NSIS Plugins
+folder.
+** The ZipDLL dependency must further be patched before use
+From the [[http://nsis.sourceforge.net/ZipDLL_plug-in][website]]:
+
+  File ZipDLL.nsh (Modified: 2004-02-14 10:22) has a syntax error that has to
+  be fixed manually: uncomment the !endif instruction on line 357.
+
+This change has been made for the ZIP file which is committed to the installer
+project.
+* Clone the installer project into c:\work\installer
+#+begin_src cmd
+cd \
+mkdir work
+cd work
+git clone --recursive git@git.boostpro.com:boost/installer.git
+#+end_src
+* Invoke the build-installer.py script
+#+begin_src cmd
+build-installer.py --build-libs --zip --build-installer --build-tools \
+  [--dvd] c:\work\installer\boost
+#+end_src
+* NOTE To build Boost.IOStreams, these additional dependencies are made available
+** zlib source code, from http://www.zlib.net/
+** libbz source code, from http://www.bzip.org/downloads.html
