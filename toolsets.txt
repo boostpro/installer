@@ -1,5 +1,3 @@
-msvc-10.0express
-msvc-9.0express
-msvc-8.0express
-msvc-7.1
-
+msvc-10.0
+msvc-9.0
+msvc-8.0
