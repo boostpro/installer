@@ -1,5 +1,6 @@
 ; Copyright 2006 Daniel Wallin
 ; Copyright 2006 Eric Niebler
+; Copyright 2010 Dave Abrahams
 ; Distributed under the Boost Software License, Version 1.0. (See
 ; accompanying file LICENSE_1_0.txt or copy at
 ; http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +18,7 @@
 !include "path.nsh"
 
 !define VERSION %(human_version)s
-!define NORMALIZED_VERSION %(version)s
+!define NORMALIZED_VERSION ${NORMALIZED_VERSION}
 !define PUBLISHER boostpro.com
 !define NAME "Boost C++ Libraries ${VERSION}"
 
@@ -80,7 +81,7 @@ Function RandomNumber
 
     IntOp $R0 $R0 * "13"
     IntOp $R0 $R0 + "3"
-    IntOp $R0 $R0 %% "1048576" # Values goes from 0 to 1048576 (2^20)
+    IntOp $R0 $R0 % "1048576" # Values goes from 0 to 1048576 (2^20)
  
     Exch $R0
 FunctionEnd
@@ -120,7 +121,7 @@ Function selectMirrorPage
     !insertmacro MUI_HEADER_TEXT "Select Mirror" "Choose which mirror you want to use to download ${NAME}."
 
     StrCmp $mirror_names "" 0 skip_mirror_download
-    inetc::get /NOCANCEL /POPUP "Download mirror list..." "http://www.boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
+    inetc::get /NOCANCEL "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
     Pop $0
     StrCmp $0 "OK" download_ok
     BringToFront
@@ -464,11 +465,11 @@ Section "Boost header files (required)"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-    inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
-    Pop $1
-    StrCmp $1 "OK" success
-    StrCmp $1 "Cancelled" cancel
-    MessageBox MB_OK "Download failed: $1"
+    inetc::get "$1$0" "$INSTDIR\$0" /END
+    Pop $2
+    StrCmp $2 "OK" success
+    StrCmp $2 "Cancelled" cancel
+    MessageBox MB_OK "Download $1$0 failed: $2"
     StrCmp $select_new_mirror 1 failed_again
     StrCpy $select_new_mirror 1
     StrCpy $R9 -4
@@ -479,7 +480,7 @@ Section "Boost header files (required)"
   success:
     Push $0
     Push ""
-SectionEnd ; end the section
+SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
@@ -507,23 +508,28 @@ Function DownloadFile
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
 
+    ${If} $1 == "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/"
+        StrCpy $use_boost_consulting 1
+    ${EndIf}
+
     ${If} $use_boost_consulting == 1
-        StrCpy $1 "http://www.boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/"
+        StrCpy $1 "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/"
     ${EndIf}
 
   try_again:
-    inetc::get /POPUP "$0" "$1$0" "$INSTDIR\lib\$0" /END
+    inetc::get "$1$0" "$INSTDIR\lib\$0" /END
     Pop $1
     StrCmp $1 "OK" success
     StrCmp $1 "Cancelled" cancel
   failed_again:
-    ; failed twice, try boost-consulting.com
+    ; failed twice, try boostpro.com
     ${If} $use_boost_consulting == 0
-        StrCpy $1 "http://www.boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/"
+        StrCpy $1 "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/"
         StrCpy $use_boost_consulting 1
         goto try_again
     ${Else}
-        MessageBox MB_OK "Files could not be downloaded."
+        MessageBox MB_OK "File could not be downloaded: $0.zip"
+        Abort
     ${EndIf}
   cancel:
     StrCpy $use_boost_consulting 0
@@ -543,11 +549,11 @@ Section "Source and Documentation"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-    inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
-    Pop $1
-    StrCmp $1 "OK" success
-    StrCmp $1 "Cancelled" cancel
-    MessageBox MB_OK "Download failed: $1"
+    inetc::get "$1$0" "$INSTDIR\$0" /END
+    Pop $2
+    StrCmp $2 "OK" success
+    StrCmp $2 "Cancelled" cancel
+    MessageBox MB_OK "Download $1$0 failed: $2"
     StrCmp $select_new_mirror 1 failed_again
     StrCpy $select_new_mirror 1
     StrCpy $R9 -4
@@ -558,7 +564,6 @@ Section "Source and Documentation"
   success:
     Push $0
     Push ""
-
 SectionEnd
 
 Section "Tools (source and binary)"
@@ -570,11 +575,11 @@ Section "Tools (source and binary)"
     goto success
 
     ${StrTok} $1 $mirror_urls "|" "$mirror_selected" "1"
-    inetc::get /POPUP "$0" "$1$0" "$INSTDIR\$0" /END
-    Pop $1
-    StrCmp $1 "OK" success
-    StrCmp $1 "Cancelled" cancel
-    MessageBox MB_OK "Download failed: $1"
+    inetc::get "$1$0" "$INSTDIR\$0" /END
+    Pop $2
+    StrCmp $2 "OK" success
+    StrCmp $2 "Cancelled" cancel
+    MessageBox MB_OK "Download $1$0 failed: $2"
     StrCmp $select_new_mirror 1 failed_again
     StrCpy $select_new_mirror 1
     StrCpy $R9 -4
@@ -587,6 +592,7 @@ Section "Tools (source and binary)"
     Push ""
     StrCpy $installed_tools 1
 SectionEnd
+
 
 ; ---------------------------------------------------------------------
 %(sections)s
@@ -605,6 +611,7 @@ Section -unzip
     Goto another_file
   bail:
 SectionEnd
+
 
 ;--------------------------------
 
@@ -637,4 +644,3 @@ Section "Uninstall"
   RMDir /r "$INSTDIR"
 
 SectionEnd
-

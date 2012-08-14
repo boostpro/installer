@@ -1,5 +1,6 @@
 ; Copyright 2006 Daniel Wallin
 ; Copyright 2006 Eric Niebler
+; Copyright 2010 Dave Abrahams
 ; Distributed under the Boost Software License, Version 1.0. (See
 ; accompanying file LICENSE_1_0.txt or copy at
 ; http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +18,7 @@
 !include "path.nsh"
 
 !define VERSION %(human_version)s
-!define NORMALIZED_VERSION %(version)s
+!define NORMALIZED_VERSION ${NORMALIZED_VERSION}
 !define PUBLISHER boostpro.com
 !define NAME "Boost C++ Libraries ${VERSION}"
 
@@ -80,7 +81,7 @@ Function RandomNumber
 
     IntOp $R0 $R0 * "13"
     IntOp $R0 $R0 + "3"
-    IntOp $R0 $R0 %% "1048576" # Values goes from 0 to 1048576 (2^20)
+    IntOp $R0 $R0 % "1048576" # Values goes from 0 to 1048576 (2^20)
  
     Exch $R0
 FunctionEnd
@@ -120,7 +121,7 @@ Function selectMirrorPage
     !insertmacro MUI_HEADER_TEXT "Select Mirror" "Choose which mirror you want to use to download ${NAME}."
 
     StrCmp $mirror_names "" 0 skip_mirror_download
-    inetc::get /NOCANCEL /POPUP "Download mirror list..." "http://www.boost-consulting.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
+    inetc::get /NOCANCEL "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
     Pop $0
     StrCmp $0 "OK" download_ok
     BringToFront
@@ -464,7 +465,7 @@ Section "Boost header files (required)"
     MessageBox MB_OK "Failed to unzip file! $2 $EXEDIR\data\$0 $INSTDIR"
     Quit
   success:
-SectionEnd ; end the section
+SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
@@ -496,10 +497,10 @@ FunctionEnd
 Section "Source and Documentation"
     AddSize 14958
     StrCpy $0 "boost_${NORMALIZED_VERSION}_doc_src.zip"
-    ZipDLL::extractall $EXEDIR\data\$0 $INSTDIR
+    ZipDLL::extractall "$EXEDIR\data\$0" "$INSTDIR"
     Pop $2 ; error message
     StrCmp $2 "success" success 0
-    MessageBox MB_OK "Failed to unzip file! $2"
+    MessageBox MB_OK "Failed to unzip file! $2 $EXEDIR\data\$0 $INSTDIR"
     Quit
   success:
 SectionEnd
@@ -507,14 +508,15 @@ SectionEnd
 Section "Tools (source and binary)"
     AddSize 1122
     StrCpy $0 "boost_${NORMALIZED_VERSION}_tools.zip"
-    ZipDLL::extractall $EXEDIR\data\$0 $INSTDIR
+    ZipDLL::extractall "$EXEDIR\data\$0" "$INSTDIR"
     Pop $2 ; error message
     StrCmp $2 "success" success 0
-    MessageBox MB_OK "Failed to unzip file! $2"
+    MessageBox MB_OK "Failed to unzip file! $2 $EXEDIR\data\$0 $INSTDIR"
     Quit
   success:
     StrCpy $installed_tools 1
 SectionEnd
+
 
 ; ---------------------------------------------------------------------
 %(sections)s
@@ -551,4 +553,3 @@ Section "Uninstall"
   RMDir /r "$INSTDIR"
 
 SectionEnd
-
