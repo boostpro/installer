@@ -642,6 +642,9 @@ SectionEnd
 ''')
     return ''.join(contents)
 
+def test_template(dvd = False):
+    return os.path.join('test', ('dvd-' if dvd else '') + 'installer.nsi.template')
+
 if __name__ == '__main__':
     import subprocess, os
 
@@ -649,30 +652,24 @@ if __name__ == '__main__':
     # compares the result with the original.  NOTE: it depends on
     # having a working diff in the PATH.  The output should only
     # differ by blank lines and the occasional comment
-    from tempfile import NamedTemporaryFile
-    f = NamedTemporaryFile(mode='w')
-    f.write(
-        generate(
-            dvd=False, 
-            version=r'${NORMALIZED_VERSION}', 
-            human_version=r'%(human_version)s', 
-            sections='%(sections)s'))
-    f.flush()
-    print subprocess.Popen(
-        ['diff', '-wdu', os.path.join('test','installer.nsi.template'), f.name]).communicate()[0]
 
-    print
-    print '=============================='
-    print
+    for dvd in False,True:
+
+        from tempfile import NamedTemporaryFile
+        f = NamedTemporaryFile(mode='w')
+        f.write(
+            generate(
+                dvd=dvd, 
+                version=r'${NORMALIZED_VERSION}', 
+                human_version=r'%(human_version)s', 
+                sections='%(sections)s'))
+        f.flush()
+        print subprocess.Popen(
+            ['diff', '-wdu', test_template(dvd=dvd), f.name]).communicate()[0]
+
+        if not dvd:
+            print
+            print '=============================='
+            print
     
-    f = NamedTemporaryFile(mode='w')
-    f.write(
-        generate(
-            dvd=True, 
-            version=r'${NORMALIZED_VERSION}', 
-            human_version=r'%(human_version)s', 
-            sections='%(sections)s'))
-    f.flush()
-    print subprocess.Popen(
-        ['diff', '-wdu', os.path.join('test','dvd-installer.nsi.template'), f.name]).communicate()[0]
     
