@@ -669,7 +669,9 @@ if __name__ == '__main__':
                     dvd=dvd, 
                     version=r'${NORMALIZED_VERSION}', 
                     human_version=r'%(human_version)s', 
-                    sections='%(sections)s')))
+                    sections='%(sections)s',
+                    architecture='32'
+                    )))
         f.flush()
         
         if not regenerate:
