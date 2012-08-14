@@ -32,7 +32,7 @@ Name "${NAME}"
 OutFile "boost_${NORMALIZED_VERSION}_setup.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES%(architecture)\boost\boost_${NORMALIZED_VERSION}
+InstallDir $PROGRAMFILES%(architecture)s\boost\boost_${NORMALIZED_VERSION}
 
 ; Registry key to check for directory (so if you install again, it will
 ; overwrite the old one automatically)
