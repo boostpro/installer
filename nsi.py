@@ -646,7 +646,7 @@ def test_template(dvd = False):
     return os.path.join('test', ('dvd-' if dvd else '') + 'installer.nsi.template')
 
 if __name__ == '__main__':
-    import subprocess, os, sys
+    import subprocess, os, sys, re
 
     # This test attempts to generate the old template files and
     # compares the result with the original.  NOTE: it depends on
@@ -664,11 +664,12 @@ if __name__ == '__main__':
             f = NamedTemporaryFile(mode='w')
 
         f.write(
-            generate(
-                dvd=dvd, 
-                version=r'${NORMALIZED_VERSION}', 
-                human_version=r'%(human_version)s', 
-                sections='%(sections)s'))
+            re.sub('(?<!\r)\n', '\r\n',
+                   generate(
+                    dvd=dvd, 
+                    version=r'${NORMALIZED_VERSION}', 
+                    human_version=r'%(human_version)s', 
+                    sections='%(sections)s')))
         f.flush()
         
         if not regenerate:
