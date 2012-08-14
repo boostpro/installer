@@ -1,4 +1,4 @@
-def generate(dvd, version, human_version, sections):
+def generate(dvd, version, human_version, sections, architecture):
     contents = [
 r'''; Copyright 2006 Daniel Wallin
 ; Copyright 2006 Eric Niebler
@@ -32,7 +32,7 @@ Name "${NAME}"
 OutFile "boost_${NORMALIZED_VERSION}_setup.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\boost\boost_${NORMALIZED_VERSION}
+InstallDir $PROGRAMFILES%(architecture)\boost\boost_${NORMALIZED_VERSION}
 
 ; Registry key to check for directory (so if you install again, it will
 ; overwrite the old one automatically)

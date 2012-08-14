@@ -145,7 +145,8 @@ def variant_name(v):
 
     return result
 
-def generate_installer(installer_dir, libdir, lib_to_name, compiler_names, version, dvd):
+def generate_installer(installer_dir, libdir, lib_to_name, compiler_names, 
+                       version, dvd, architecture):
     libs = [ decompose_variant(lib) for lib in os.listdir(libdir) ]
     libs = filter(lambda x: x is not None, libs)
     for x in libs:
@@ -178,7 +179,8 @@ def generate_installer(installer_dir, libdir, lib_to_name, compiler_names, versi
     human_version = version.replace('_', '.')
 
     installer = nsi.generate(
-        dvd=dvd, version=version, human_version=human_version, sections=sections)
+        dvd=dvd, version=version, human_version=human_version, 
+        sections=sections, architecture=architecture)
 
     open('boost_%s_setup.nsi' % version, 'w').write(installer)
 
@@ -255,6 +257,7 @@ def main(argv):
     do_build_tools = False
 
     dvd = False
+    architecture = '32'
 
     for arg in argv:
         if arg == '--build-libs':
@@ -267,6 +270,10 @@ def main(argv):
             do_build_tools = True
         elif arg == '--dvd':
             dvd = True
+        elif arg == '--32bit':
+            architecture = '32'
+        elif arg == '--64bit':
+            architecture = '64'
 
     cwd = os.getcwd()
     root = argv[-1]
@@ -310,7 +317,8 @@ def main(argv):
                            lib_to_name,
                            compiler_names,
                            version,
-                           dvd)
+                           dvd,
+                           architecture)
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
