@@ -643,12 +643,14 @@ SectionEnd
     return ''.join(contents)
 
 if __name__ == '__main__':
+    import subprocess, os
+
     # This test attempts to generate the old template files and
     # compares the result with the original.  NOTE: it depends on
     # having a working diff in the PATH.  The output should only
     # differ by blank lines and the occasional comment
-    from tempfile import TemporaryFile
-    f = TemporaryFile(mode='w')
+    from tempfile import NamedTemporaryFile
+    f = NamedTemporaryFile(mode='w')
     f.write(
         generate(
             dvd=False, 
@@ -656,14 +658,14 @@ if __name__ == '__main__':
             human_version=r'%(human_version)s', 
             sections='%(sections)s'))
     f.flush()
-    import os
-    os.system('diff -wdu test\installer.nsi.template ' + f.name)
+    print subprocess.Popen(
+        ['diff', '-wdu', os.path.join('test','installer.nsi.template'), f.name]).communicate()[0]
 
     print
     print '=============================='
     print
     
-    f = TemporaryFile(mode='w')
+    f = NamedTemporaryFile(mode='w')
     f.write(
         generate(
             dvd=True, 
@@ -671,6 +673,6 @@ if __name__ == '__main__':
             human_version=r'%(human_version)s', 
             sections='%(sections)s'))
     f.flush()
-    import os
-    os.system('diff -wdu test\dvd-installer.nsi.template ' + f.name)
+    print subprocess.Popen(
+        ['diff', '-wdu', os.path.join('test','dvd-installer.nsi.template'), f.name]).communicate()[0]
     
