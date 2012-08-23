@@ -1,5 +1,6 @@
 boost_bzip2 = Boost BZip2
 boost_chrono = Boost Chrono
+boost_context = Boost Context
 boost_date_time = Boost DateTime
 boost_exception = Boost Exception
 boost_filesystem = Boost Filesystem
