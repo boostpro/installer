@@ -1,18 +1,18 @@
 Nearest SourceForge Mirror (recommended)
-http://downloads.sourceforge.net/project/boost/boost-binaries/1.50.0/
+http://downloads.sourceforge.net/project/boost/boost-binaries/1.51.0/
 BoostPro Computing
-http://www.boostpro.com/boost-binaries/1_50/
+http://www.boostpro.com/boost-binaries/1_51/
 SourceForge voxel
-http://voxel.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/
+http://voxel.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge internap
-http://internap.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/
+http://internap.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge superb-east
-http://superb-east.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/ 
+http://superb-east.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/ 
 SourceForge superb-west
-http://superb-west.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/ 
+http://superb-west.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/ 
 SourceForge easynews
-http://easynews.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/
+http://easynews.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge dfn
-http://dfn.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/
+http://dfn.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge switch
-http://switch.dl.sourceforge.net/project/boost/boost-binaries/1.50.0/
+http://switch.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
