@@ -69,7 +69,7 @@ def build_bjam(root, log):
 
     return os.path.join(root, 'bjam.exe')
 
-def build_libraries(root, bjam, toolsets, log):
+def build_libraries(root, bjam, toolsets, architecture, log):
     for lib in [root]: # glob.glob(os.path.join(root, 'libs', '*', 'build')):
         # This library just has some preprocessing stuff in its build subdirectory
         if os.path.split(lib)[0].endswith('function_types'): continue
@@ -78,6 +78,11 @@ def build_libraries(root, bjam, toolsets, log):
 
         cmd = bjam + ('''--build-type=complete stage toolset='''
                       + ','.join(toolsets)).split()
+
+        if architecture == '64':
+            cmd += ' architecture=x86'
+        else:
+            cmd += ' architecture=x86 address-model=64'
 
         status, output = execute_with_progress(
             os.path.join(root, lib), cmd, r'^(?!common.mkdir)\S', log, bjam_trigger_re)
@@ -302,7 +307,7 @@ def main(argv):
         bjam = os.path.abspath(build_bjam(root, log))
 
     if build_libs:
-        build_libraries(root, [bjam] + bjam_options, toolsets, log)
+        build_libraries(root, [bjam] + bjam_options, toolsets, architecture, log)
 
     if do_build_tools:
         build_tools(root, [bjam] + bjam_options, log)
