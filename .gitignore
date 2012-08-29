@@ -1,7 +1,8 @@
 /*-installer/
-build.log
-boost_*_setup.exe
-boost_*_setup.nsi
+/*.pyc
+/build.log
+/boost_*_setup.exe
+/boost_*_setup.nsi
 .DS_Store
 /redhat/Boost145x64EL5.iso
 /redhat/SRPMS/boost-1.33.1-10.el5.src.rpm
