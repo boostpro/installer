@@ -285,43 +285,43 @@ def main(argv):
 
     make_directories([installer_dir, build_dir, stage_dir, zip_dir])
 
-    log = open('build.log', 'w', 0)
+    with open('build.log', 'w', 0) as log:
 
-    toolsets = open('toolsets.txt').read().split()
-    compiler_names = read_key_value_pairs('compiler-names.txt')
+        toolsets = [ t for t in open('toolsets.txt').read().split() if architecture != '64' or t != 'msvc-7.1' ]
+        compiler_names = read_key_value_pairs('compiler-names.txt')
 
-    bjam_options = [
-        '--user-config=%s' % os.path.join(cwd, 'user-config.jam'),
-        '--build-dir=%s' % build_dir,
-        '--stagedir=%s' % stage_dir,
-        '--debug-configuration',
-        '-j%d' % (multiprocessing.cpu_count() * 2),
-    ]
+        bjam_options = [
+                '--user-config=%s' % os.path.join(cwd, 'user-config.jam'),
+            '--build-dir=%s' % build_dir,
+            '--stagedir=%s' % stage_dir,
+            '--debug-configuration',
+            '-j%d' % (multiprocessing.cpu_count() * 2),
+        ]
 
-    if architecture == '64':
-        bjam_options.append('address-model=64')
+        if architecture == '64':
+            bjam_options.append('address-model=64')
 
-    if build_libs or do_build_tools:
-        bjam = os.path.abspath(build_bjam(root, log))
+        if build_libs or do_build_tools:
+            bjam = os.path.abspath(build_bjam(root, log))
 
-    if build_libs:
-        build_libraries(root, [bjam] + bjam_options, toolsets, log)
+        if build_libs:
+            build_libraries(root, [bjam] + bjam_options, toolsets, log)
 
-    if do_build_tools:
-        build_tools(root, [bjam] + bjam_options, log)
+        if do_build_tools:
+            build_tools(root, [bjam] + bjam_options, log)
 
-    if build_zips:
-        build_zip_files(root, version, os.path.join(stage_dir, 'lib'), zip_dir, log)
+        if build_zips:
+            build_zip_files(root, version, os.path.join(stage_dir, 'lib'), zip_dir, log)
 
-    if build_installer:
-        lib_to_name = read_key_value_pairs('lib-names.txt')
-        generate_installer(installer_dir,
-                           os.path.join(stage_dir, 'lib'),
-                           lib_to_name,
-                           compiler_names,
-                           version,
-                           dvd,
-                           architecture)
+        if build_installer:
+            lib_to_name = read_key_value_pairs('lib-names.txt')
+            generate_installer(installer_dir,
+                               os.path.join(stage_dir, 'lib'),
+                               lib_to_name,
+                               compiler_names,
+                               version,
+                               dvd,
+                               architecture)
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
