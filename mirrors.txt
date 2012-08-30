@@ -7,9 +7,9 @@ http://voxel.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge internap
 http://internap.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge superb-east
-http://superb-east.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/ 
+http://superb-east.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge superb-west
-http://superb-west.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/ 
+http://superb-west.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge easynews
 http://easynews.dl.sourceforge.net/project/boost/boost-binaries/1.51.0/
 SourceForge dfn
