@@ -1,4 +1,6 @@
 def generate(dvd, version, human_version, sections, architecture):
+    arch_suffix = '-x64' if architecture == '64' else ''
+
     contents = [
 r'''; Copyright 2006 Daniel Wallin
 ; Copyright 2006 Eric Niebler
@@ -125,7 +127,7 @@ Function selectMirrorPage
     !insertmacro MUI_HEADER_TEXT "Select Mirror" "Choose which mirror you want to use to download ${NAME}."
 
     StrCmp $mirror_names "" 0 skip_mirror_download
-    inetc::get /NOCANCEL "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}/mirrors.txt" "$TEMP\mirrors.txt" /END
+    inetc::get /NOCANCEL "http://www.boostpro.com/boost-binaries/${NORMALIZED_VERSION}%(arch_suffix)s/mirrors.txt" "$TEMP\mirrors.txt" /END
     Pop $0
     StrCmp $0 "OK" download_ok
     BringToFront
