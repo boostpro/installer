@@ -314,6 +314,10 @@ def main(argv):
             build_zip_files(root, version, os.path.join(stage_dir, 'lib'), zip_dir, log)
 
         if build_installer:
+            import mirrors
+            open('mirrors.txt', 'w').write(
+                mirrors.generate(version, architecture))
+
             lib_to_name = read_key_value_pairs('lib-names.txt')
             generate_installer(installer_dir,
                                os.path.join(stage_dir, 'lib'),
